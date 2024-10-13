@@ -112,6 +112,11 @@ jobs:
           ./theos-jailed/install
         env:
           THEOS: ${{ github.workspace }}/theos
+
+      - name: Fix Compiling Issue with substrate.h
+        run: |
+          # Patch substrate.h to avoid extern C conflict with mach-o/nlist.h
+          sed -i '' '/#include <mach-o\/nlist.h>/d' theos/vendor/include/substrate.h
         
       - name: Fix Compiling
         run: |
