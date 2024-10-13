@@ -113,6 +113,15 @@ jobs:
         env:
           THEOS: ${{ github.workspace }}/theos
 
+      - name: Download Alderis Framework
+        run: |
+          if [ ! -d "theos/vendor/lib/Alderis.framework" ]; then
+            git clone https://github.com/hbang/Alderis.git
+            mkdir -p theos/vendor/lib
+            mv Alderis/Alderis.framework theos/vendor/lib/
+            rm -rf Alderis
+          fi
+
       - name: Fix Compiling Issue with substrate.h
         run: |
           # Patch substrate.h to avoid extern C conflict with mach-o/nlist.h
